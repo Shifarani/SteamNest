@@ -19,8 +19,8 @@ import Dashboard from "../pages/Dashboard";
 
 import EditVideo from "../pages/EditVideo";
 
-import Playlists from "../pages/Playlists";
-import PlaylistDetails from "../pages/playlistDetails";
+import Playlists from "../pages/playlists";
+import PlaylistDetails from "../pages/PlaylistDetails";
 
 import WatchHistory from "../pages/WatchHistory";
 import Subscriptions from "../pages/Subscriptions";
