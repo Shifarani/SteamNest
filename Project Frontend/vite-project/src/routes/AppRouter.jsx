@@ -20,7 +20,7 @@ import Dashboard from "../pages/Dashboard";
 import EditVideo from "../pages/EditVideo";
 
 import Playlists from "../pages/Playlists";
-import PlaylistDetails from "../pages/PlaylistDetails";
+import PlaylistDetails from "../pages/playlistDetails";
 
 import WatchHistory from "../pages/WatchHistory";
 import Subscriptions from "../pages/Subscriptions";
