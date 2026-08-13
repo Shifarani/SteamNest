@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+
+/* Theme Colors */
+
+
+:root {
+  --primary: #f97316;
+  --secondary: #9333ea;
+
+  --bg: #ffffff;
+  --card: #ffffff;
+  --text: #111827;
+  --border: #e5e7eb;
+  --muted: #6b7280;
+}
+
+
+/* Dark Mode */
+
+
+.dark {
+  --bg: #09090b;
+  --card: #18181b;
+  --text: #ffffff;
+  --border: #3f3f46;
+  --muted: #a1a1aa;
+}
+
+
+/* Theme Colors */
+
+
+[data-theme="orange"] {
+  --primary: #f97316;
+}
+
+
+[data-theme="purple"] {
+  --primary: #9333ea;
+}
+
+
+[data-theme="blue"] {
+  --primary: #2563eb;
+}
+
+
+[data-theme="green"] {
+  --primary: #16a34a;
+}
+
+
+[data-theme="red"] {
+  --primary: #dc2626;
+}
+
+
+html,
+body,
+#root {
+  min-height: 100%;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+@keyframes storyProgress {
+  from {
+    width: 0%;
+  }
+
+
+  to {
+    width: 100%;
+  }
+}
+
+
+.animate-story-progress {
+  animation: storyProgress 5s linear forwards;
+}
