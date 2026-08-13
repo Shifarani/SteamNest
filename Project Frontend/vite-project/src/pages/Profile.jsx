@@ -30,12 +30,12 @@ import { useNavigate } from "react-router-dom";
 import { getChannelVideos } from "../api/dashboardApi";
 import { deleteVideo, getAllVideos } from "../api/videoApi";
 
-import ActivityTabs from "../components/Profile/ActivityTabs";
-import PostsSection from "../components/Profile/PostsSection";
-import VideosSection from "../components/Profile/VideosSection";
-import CommentsSection from "../components/Profile/CommentsSection";
-import LikesSection from "../components/Profile/LikesSection";
-import ImagesSection from "../components/Profile/ImagesSection";
+import ActivityTabs from "../components/profile/ActivityTabs";
+import PostsSection from "../components/profile/PostsSection";
+import VideosSection from "../components/profile/VideosSection";
+import CommentsSection from "../components/profile/CommentsSection";
+import LikesSection from "../components/profile/LikesSection";
+import ImagesSection from "../components/profile/ImagesSection";
 import { createStory, getActiveStories, deleteStory} from "../api/storyApi";
 import { div } from "framer-motion/client";
 
