@@ -37,9 +37,8 @@ const handleChange = (e) => {
 };
 const handleLogin = async (e) => {
   e.preventDefault();
-  console.log("========== FRONTEND LOGIN ==========");
-  console.log("Email:", formData.email);
-  console.log("Password:", formData.password);
+  
+
     if (!formData.email.trim()) {
   toast.error("Email is required");
   return;
