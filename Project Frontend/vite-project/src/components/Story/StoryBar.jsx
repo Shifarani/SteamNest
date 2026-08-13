@@ -334,8 +334,9 @@ const StoryBar = ({ user, onClose, activeStoryUser}) => {
                   ">
 
                     <img
+                      
                       src={
-                        myStoryUser.owner?.avatar ||
+                        storyUser.owner?.avatar?.replace("http://", "https://") ||
                         "/default-avatar.png"
                       }
                       alt="My Story"
@@ -422,11 +423,10 @@ const StoryBar = ({ user, onClose, activeStoryUser}) => {
                       ">
 
                         <img
-                          src={
-                            storyUser.owner
-                              ?.avatar ||
-                            "/default-avatar.png"
-                          }
+                        src={
+                        storyUser.owner?.avatar?.replace("http://", "https://") ||
+                        "/default-avatar.png"
+                      }
                           alt={
                             storyUser.owner
                               ?.fullName ||

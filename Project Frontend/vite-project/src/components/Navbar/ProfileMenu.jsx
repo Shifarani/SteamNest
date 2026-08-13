@@ -36,7 +36,7 @@ const { logout } = useAuth();
       >
        <img
           src={
-            user?.avatar ||
+            user?.avatar?.replace("http://", "https://") ||
             "https://ui-avatars.com/api/?name=User&background=f97316&color=fff"
           }
           alt={user?.fullName}
@@ -57,10 +57,10 @@ const { logout } = useAuth();
           {/* User Info */}
           <div className="border-b p-4">
            <img
-              src={
-                user?.avatar ||
-                "https://ui-avatars.com/api/?name=User&background=f97316&color=fff"
-              }
+                          src={
+              user?.avatar?.replace("http://", "https://") ||
+              "https://ui-avatars.com/api/?name=User&background=f97316&color=fff"
+            }
               alt={user?.fullName}
               className="mx-auto h-16 w-16 rounded-full object-cover"
             />

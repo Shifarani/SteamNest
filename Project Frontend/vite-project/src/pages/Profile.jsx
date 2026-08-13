@@ -25,7 +25,7 @@ import {
 } from "../api/userApi";
 
 import { getChannelStats } from "../api/dashboardApi";
-
+import { getSecureImageUrl } from "../utils/imageUrl";
 import { useNavigate } from "react-router-dom";
 import { getChannelVideos } from "../api/dashboardApi";
 import { deleteVideo, getAllVideos } from "../api/videoApi";
@@ -452,11 +452,10 @@ const filteredVideos = videos.filter((video) =>
          <div className="relative h-[220px] sm:h-[250px] md:h-[280px] overflow-hidden rounded-3xl group">
 
                 <img
-                  src={
-                    coverImage ||
-                    user?.coverImage ||
-                    "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1800&auto=format&fit=crop&q=80"
-                  }
+                src={
+                getSecureImageUrl(user?.avatar) ||
+                "https://ui-avatars.com/api/?name=User&background=f97316&color=fff"
+              }
                   alt="cover"
                   className="
                     h-full w-full object-cover
@@ -606,11 +605,10 @@ const filteredVideos = videos.filter((video) =>
                   
 
                   <img
-                    src={
-                      avatar ||
-                      user?.avatar ||
-                      "https://ui-avatars.com/api/?name=User"
-                    }
+                   src={
+                    getSecureImageUrl(user?.avatar) ||
+                    "https://ui-avatars.com/api/?name=User&background=f97316&color=fff"
+                  }
                     alt="avatar"
                     className="h-full w-full rounded-full object-cover"
                   />
@@ -787,10 +785,10 @@ const filteredVideos = videos.filter((video) =>
         >
 
             <img
-              src={
-                searchedUser.avatar ||
-                "/default-avatar.png"
-              }
+             src={
+              getSecureImageUrl(searchedUser.avatar) ||
+              "/default-avatar.png"
+            }
               alt={searchedUser.username}
               className="
                 h-10
@@ -1069,11 +1067,10 @@ const filteredVideos = videos.filter((video) =>
                   <div className="flex items-center gap-4">
 
                     <img
-                      src={
-                        avatar ||
-                        user?.avatar ||
-                        "https://ui-avatars.com/api/?name=User"
-                      }
+                     src={
+                    getSecureImageUrl(avatar || user?.avatar) ||
+                    "https://ui-avatars.com/api/?name=User"
+                  }
                       alt="avatar"
                       className="h-14 w-14 rounded-full border-2 border-orange-400 object-cover"
                     />
@@ -1111,10 +1108,10 @@ const filteredVideos = videos.filter((video) =>
                 <div className="relative h-[340px] overflow-hidden">
 
                   <img
-                    src={
-                      latestPost?.thumbnail ||
-                      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&auto=format&fit=crop&q=80"
-                    }
+                  src={
+                        latestPost?.thumbnail ||
+                        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&auto=format&fit=crop&q=80"
+                      }
                     alt="post"
                     className="h-full w-full object-cover transition duration-700 hover:scale-105"
                   />
@@ -1218,12 +1215,11 @@ const filteredVideos = videos.filter((video) =>
 
         <img
           src={
-            editAvatarFile
-              ? URL.createObjectURL(editAvatarFile)
-              : avatar ||
-                user?.avatar ||
-                "https://ui-avatars.com/api/?name=User"
-          }
+          editAvatarFile
+            ? URL.createObjectURL(editAvatarFile)
+            : getSecureImageUrl(avatar || user?.avatar) ||
+              "https://ui-avatars.com/api/?name=User"
+        }
           alt="avatar"
           className="h-24 w-24 rounded-full border-4 border-orange-500 object-cover"
         />
