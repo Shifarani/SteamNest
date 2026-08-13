@@ -2,7 +2,7 @@ import axios from "axios";
 import axiosInstance from "./axiosInstance";
 
 const API = axios.create({
-  baseURL: "http://localhost:8000/api/v1/users",
+  baseURL: "https://steamnest.onrender.com/api/v1/users",
   withCredentials: true,
 });
 
