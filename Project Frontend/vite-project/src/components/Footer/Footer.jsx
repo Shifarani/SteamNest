@@ -94,6 +94,7 @@ const Footer = () => {
 
           <p className="text-sm text-[var(--muted)]">
             © 2026 SteamNest. All Rights Reserved.
+             Built with ❤️ by Shifa Rani.
           </p>
 
           <div className="flex gap-6">
