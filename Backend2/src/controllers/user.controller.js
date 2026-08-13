@@ -143,9 +143,10 @@ const registerUser = asyncHandler(async (req, res) => {
     );
 
     const options = {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-    };
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+};
 
     return res
         .status(200)
@@ -178,9 +179,10 @@ const logoutUser = asyncHandler(async (req, res) => {
         }
     );
 
-    const options = {
+   const options = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
+    sameSite: "none",
 };
 
     return res
@@ -230,7 +232,8 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
         const options = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
+            secure: true,
+            sameSite: "none",
         };
 
         const {
