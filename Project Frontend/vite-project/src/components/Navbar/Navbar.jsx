@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 import ProfileMenu from "./ProfileMenu";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
-import Sidebar from "./Sidebar";
+import Sidebar from "./SideBar";
 
 const Navbar = () => {
 
