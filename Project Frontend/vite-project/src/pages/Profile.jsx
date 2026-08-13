@@ -37,7 +37,7 @@ import CommentsSection from "../components/profile/CommentsSection";
 import LikesSection from "../components/profile/LikesSection";
 import ImagesSection from "../components/profile/ImagesSection";
 import { createStory, getActiveStories, deleteStory} from "../api/storyApi";
-import { div } from "framer-motion/client";
+import { motion } from "framer-motion";
 
 import StoryBar from "../components/Story/StoryBar";
 import { searchUsers } from "../api/userApi";
