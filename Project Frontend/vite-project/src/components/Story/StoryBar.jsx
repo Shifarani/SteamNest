@@ -336,7 +336,7 @@ const StoryBar = ({ user, onClose, activeStoryUser}) => {
                     <img
                       
                       src={
-                        storyUser.owner?.avatar?.replace("http://", "https://") ||
+                        myStoryUser.owner?.avatar?.replace("http://", "https://") ||
                         "/default-avatar.png"
                       }
                       alt="My Story"
