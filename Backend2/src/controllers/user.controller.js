@@ -83,21 +83,39 @@ const registerUser = asyncHandler(async (req, res) => {
         username: username.toLowerCase(),
     });
 
-    const createdUser = await User.findById(user._id).select(
-        "-password -refreshToken"
+   const createdUser = await User.findById(user._id).select(
+    "-password -refreshToken"
+);
+
+if (!createdUser) {
+    throw new ApiError(
+        500,
+        "Something went wrong while registering user"
     );
+}
 
-    if (!createdUser) {
-        throw new ApiError(
-            500,
-            "Something went wrong while registering user"
-        );
-    }
+// Generate login tokens
+const { accessToken, refreshToken } =
+    await generateAccessAndRefreshTokens(user._id);
 
-    return res.status(201).json(
+const options = {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+};
+
+return res
+    .status(201)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
         new ApiResponse(
-            200,
-            createdUser,
+            201,
+            {
+                user: createdUser,
+                accessToken,
+                refreshToken,
+            },
             "User registered successfully"
         )
     );

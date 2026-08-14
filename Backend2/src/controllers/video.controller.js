@@ -207,26 +207,35 @@ const publishAVideo = asyncHandler(async (req, res) => {
             },
         },
         {
-            $addFields: {
-                likesCount: {
-                    $size: "$likes",
-                },
-                subscribersCount: {
-                    $size: "$subscribers",
-                },
-                isSubscribed: {
-                    $cond: {
-                        if: {
-                            $in: [
-                                req.user?._id,
-                                "$subscribers.subscriber",
-                            ],
-                        },
-                        then: true,
-                        else: false,
-                    },
-                },
+           $addFields: {
+    likesCount: {
+        $size: "$likes",
+    },
+
+    subscribersCount: {
+        $size: "$subscribers",
+    },
+
+    isLiked: {
+        $in: [
+            req.user._id,
+            "$likes.likedBy",
+        ],
+    },
+
+    isSubscribed: {
+        $cond: {
+            if: {
+                $in: [
+                    req.user?._id,
+                    "$subscribers.subscriber",
+                ],
             },
+            then: true,
+            else: false,
+        },
+    },
+},
         },
                 {
             $project: {
