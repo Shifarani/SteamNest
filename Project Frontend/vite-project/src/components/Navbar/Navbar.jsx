@@ -28,7 +28,7 @@ const Navbar = () => {
         <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-2 px-2 sm:px-5">
 
           {/* Left */}
-          <div className="flex min-w-0 shrink-0 items-center gap-2 sm:gap-4">
+         <div className="flex min-w-0 shrink-0 items-center gap-1 sm:gap-4">
             <button
               onClick={() => setSidebarOpen(true)}
               className="shrink-0 rounded-lg p-2 text-white transition hover:bg-[var(--bg)]/10"
@@ -36,7 +36,9 @@ const Navbar = () => {
               <FiMenu size={25} />
             </button>
 
+           <div className="w-[145px] shrink-0 sm:w-auto">
             <Logo />
+          </div>
 
             <nav className="hidden items-center gap-6 md:flex">
               <NavLink
@@ -68,7 +70,7 @@ const Navbar = () => {
           </div>
 
           {/* Right */}
-          <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-4">
+         <div className="ml-auto flex shrink-0 items-center gap-0 sm:gap-4">
 
             <Link
               to="/upload"
@@ -87,7 +89,7 @@ const Navbar = () => {
             {loading ? null : isLoggedIn ? (
               <ProfileMenu user={user} />
             ) : (
-              <div className="flex shrink-0 items-center gap-1 sm:gap-3">
+             <div className="flex shrink-0 items-center gap-0.5 sm:gap-3">
                 <Link
                   to="/login"
                   className="whitespace-nowrap px-1 text-sm font-medium text-white hover:text-orange-500 sm:px-0 sm:text-base"
