@@ -441,7 +441,7 @@ const filteredVideos = videos.filter((video) =>
 
     <div className="absolute bottom-[-120px] left-1/2 h-[350px] w-[700px] -translate-x-1/2 rounded-full bg-gradient-to-r from-orange-500/20 via-pink-500/20 to-violet-600/20 blur-[170px]" />
 
-    <div className="relative min-h-screen bg-gradient-to-r from-orange-500 via-pink-500 to-violet-600 px-6 py-8">
+    <div className="relative min-h-screen bg-gradient-to-r from-orange-500 via-pink-500 to-violet-600 px-3 py-4 sm:py-8">
 
       {/* ================= Hero Card ================= */}
 
@@ -449,11 +449,11 @@ const filteredVideos = videos.filter((video) =>
 
         {/* ================= Cover ================= */}
 
-         <div className="relative h-[220px] sm:h-[250px] md:h-[280px] overflow-hidden rounded-3xl group">
+         <div className="relative h-[170px] sm:h-[220px] md:h-[280px] overflow-hidden rounded-3xl group">
 
                 <img
                 src={
-                getSecureImageUrl(user?.avatar) ||
+              getSecureImageUrl(user?.coverImage) ||
                 "https://ui-avatars.com/api/?name=User&background=f97316&color=fff"
               }
                   alt="cover"
@@ -556,14 +556,14 @@ const filteredVideos = videos.filter((video) =>
 
           {/* ================= Avatar ================= */}
 
-          <div className="absolute -top-20 left-10">
+         <div className="absolute -top-14 left-4 sm:-top-20 sm:left-10">
 
             <div className="relative">
 
               {/* ================= STORY RING ================= */}
 
               <div
-                className="relative h-40 w-40 rounded-full p-[5px]"
+                className="relative h-28 w-28 sm:h-40 sm:w-40 rounded-full p-[5px]"
                 style={
                   myStories.length > 0
                     ? {
@@ -660,13 +660,13 @@ const filteredVideos = videos.filter((video) =>
 
           {/* ================= User Info ================= */}
 
-          <div className="pl-48 pt-8">
+          <div className="pl-0 pt-20 sm:pl-48 sm:pt-8">
 
             <div className="flex flex-wrap items-center justify-between gap-6">
 
               <div>
 
-                <h1 className="text-5xl font-black tracking-tight">
+                <h1 className="text-3xl sm:text-5xl font-black tracking-tight">
                   {user?.fullName || "SteamNest User"}
                 </h1>
 
@@ -676,12 +676,13 @@ const filteredVideos = videos.filter((video) =>
 
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
 
                {isOwnProfile && (
                     <button
                       onClick={() => setEditProfileOpen(true)}
                       className="
+                      w-full sm:w-auto justify-center
                         flex items-center gap-2
                         rounded-2xl
                         bg-gradient-to-r
@@ -700,7 +701,7 @@ const filteredVideos = videos.filter((video) =>
                   )}
                 <Link
                   to="/dashboard"
-                  className="rounded-2xl border border-white/20 bg-[var(--bg)]/10 px-7 py-3 font-semibold backdrop-blur-xl transition hover:bg-[var(--bg)]/20"
+                  className="rounded-2xl border border-white/20 bg-[var(--bg)]/10 px-7 py-3 font-semibold backdrop-blur-xl transition hover:bg-[var(--bg)]/20 w-full sm:w-auto text-center"
                 >
                   Go to Dashboard
                 </Link>
@@ -731,9 +732,12 @@ const filteredVideos = videos.filter((video) =>
         border-white/15
         bg-[var(--bg)]/10
         backdrop-blur-3xl
-        py-5
-        pl-16
-        pr-6
+        py-4
+        pl-14
+        pr-4
+        sm:py-5
+        sm:pl-16
+        sm:pr-6
         text-white
         placeholder:text-gray-300
         outline-none
@@ -821,7 +825,7 @@ const filteredVideos = videos.filter((video) =>
 
             <div className="mt-10">
 
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
 
                 <h2 className="text-2xl font-bold tracking-wide">
                   Activity
@@ -954,7 +958,7 @@ const filteredVideos = videos.filter((video) =>
                           <img
                             src={video.thumbnail}
                             alt={video.title}
-                            className="h-56 w-full object-cover"
+                            className="h-56 w-full object-cover sm:h-56"
                           />
 
                           <div className="p-5">
@@ -1105,8 +1109,7 @@ const filteredVideos = videos.filter((video) =>
 
                 {/* ================= Thumbnail ================= */}
 
-                <div className="relative h-[340px] overflow-hidden">
-
+               <div className="relative h-[220px] overflow-hidden sm:h-[280px] md:h-[340px]">
                   <img
                   src={
                         latestPost?.thumbnail ||
@@ -1186,9 +1189,9 @@ const filteredVideos = videos.filter((video) =>
 {/* ================= EDIT PROFILE ================= */}
 
 {isOwnProfile && editProfileOpen && (
-  <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-6 backdrop-blur-md">
+     <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/70 p-3 backdrop-blur-md sm:p-6">
 
-    <div className="relative w-full max-w-3xl rounded-[32px] border border-white/10 bg-[#111827] p-8 shadow-2xl">
+    <div className="relative w-full max-w-3xl rounded-[32px] border border-white/10 bg-[#111827] p-8 shadow-2xl my-4 max-h-[90vh] overflow-y-auto rounded-[24px] p-5 sm:rounded-[32px] sm:p-8">
 
       {/* Close */}
 
@@ -1399,13 +1402,13 @@ const filteredVideos = videos.filter((video) =>
 
                   {/* ================= STORY VIEWER ================= */}
 
-              {storyOpen && myStories.length > 0 && (
+              {storyOpen && activeUserStories.length > 0 && (
 
                 <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-orange-500 via-pink-500 to-violet-700">
 
                   {/* ================= STORY CONTAINER ================= */}
 
-                  <div className="relative h-[90vh] w-[90vw] max-w-[500px] overflow-hidden rounded-3xl bg-black shadow-2xl">
+                  <div className="relative h-[92vh] w-[95vw] max-w-[500px] sm:h-[90vh] sm:w-[90vw] overflow-hidden rounded-3xl bg-black shadow-2xl">
 
                     {/* ================= PROGRESS BARS ================= */}
 
@@ -1455,7 +1458,9 @@ const filteredVideos = videos.filter((video) =>
 
                       <video
                         key={activeUserStories[currentStoryIndex]?._id}
-                        src={activeUserStories[currentStoryIndex]?.mediaUrl}
+                        src={getSecureImageUrl(
+                        activeUserStories[currentStoryIndex]?.mediaUrl
+                      )}
                         autoPlay
                         controls
                         className="h-full w-full object-contain"
@@ -1465,7 +1470,9 @@ const filteredVideos = videos.filter((video) =>
 
                       <img
                         key={activeUserStories[currentStoryIndex]?._id}
-                        src={activeUserStories[currentStoryIndex]?.mediaUrl}
+                        src={getSecureImageUrl(
+                          activeUserStories[currentStoryIndex]?.mediaUrl
+                        )}
                         alt="Story"
                         className="h-full w-full object-contain"
                       />

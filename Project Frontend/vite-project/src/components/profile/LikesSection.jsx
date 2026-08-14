@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Heart, Eye, CalendarDays } from "lucide-react";
 import { getLikedVideos } from "../../api/likeApi";
+import { getSecureImageUrl } from "../../utils/imageUrl";
 
 const LikesSection = () => {
   const [likedVideos, setLikedVideos] = useState([]);
@@ -28,7 +29,7 @@ const LikesSection = () => {
   // Loading
   if (loading) {
     return (
-      <div className="rounded-2xl border border-white/10 bg-[var(--bg)]/10 p-10 text-center backdrop-blur-xl">
+      <div className="rounded-2xl border border-white/10 bg-[var(--bg)]/10 p-6 sm:p-10 text-center backdrop-blur-xl">
         <p className="text-lg text-[var(--muted)]">
           Loading Liked Videos...
         </p>
@@ -39,7 +40,7 @@ const LikesSection = () => {
   // No liked videos
   if (likedVideos.length === 0) {
     return (
-      <div className="rounded-2xl border border-white/10 bg-[var(--bg)]/10 p-10 text-center backdrop-blur-xl">
+      <div className="rounded-2xl border border-white/10 bg-[var(--bg)]/10 p-6 sm:p-10 text-center backdrop-blur-xl">
         <Heart
           size={45}
           className="mx-auto mb-4 text-red-400"
@@ -87,18 +88,19 @@ const LikesSection = () => {
               {/* Thumbnail */}
 
               <img
-                src={
-                  video.thumbnail ||
+               src={
+                  getSecureImageUrl(video.thumbnail) ||
                   "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500"
                 }
                 alt={video.title}
-                className="
-                  h-52
+                 className="
+                  h-44
                   w-full
                   rounded-xl
                   object-cover
                   sm:h-32
                   sm:w-52
+                  sm:shrink-0
                 "
               />
 
@@ -121,7 +123,7 @@ const LikesSection = () => {
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-bold text-white">
+                    <h3 className="line-clamp-2 text-lg font-bold text-white sm:text-xl">
                       {video.title}
                     </h3>
 

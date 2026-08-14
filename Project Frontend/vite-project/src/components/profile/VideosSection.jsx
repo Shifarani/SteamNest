@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Eye, Pencil, Trash2, Video } from "lucide-react";
 
 const VideosSection = ({ videos = [], onDelete }) => {
+  const navigate = useNavigate();
   if (videos.length === 0) {
     return (
       <div className="rounded-2xl border border-white/10 bg-[var(--bg)]/10 p-10 text-center backdrop-blur-xl">
@@ -29,7 +30,7 @@ const VideosSection = ({ videos = [], onDelete }) => {
   }
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+   <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-6">
       {videos.map((video) => (
         <div
           key={video._id}
@@ -37,7 +38,7 @@ const VideosSection = ({ videos = [], onDelete }) => {
         >
           {/* Thumbnail */}
           <Link to={`/watch/${video._id}`}>
-            <div className="relative h-48 overflow-hidden">
+            <div className="relative h-52 overflow-hidden sm:h-48">
               <img
                 src={video.thumbnail}
                 alt={video.title}
@@ -51,7 +52,7 @@ const VideosSection = ({ videos = [], onDelete }) => {
           </Link>
 
           {/* Content */}
-          <div className="p-5">
+          <div className="p-5 sm:p-5">
             <Link to={`/watch/${video._id}`}>
               <h3 className="line-clamp-2 text-lg font-bold text-white hover:text-orange-400">
                 {video.title}
@@ -62,7 +63,7 @@ const VideosSection = ({ videos = [], onDelete }) => {
               {video.description || "No description available."}
             </p>
 
-            <div className="mt-4 flex items-center gap-4 text-sm text-[var(--muted)]">
+            <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-[var(--muted)]">
               <span className="flex items-center gap-1">
                 <Eye size={16} />
                 {video.views || 0} Views
@@ -76,25 +77,23 @@ const VideosSection = ({ videos = [], onDelete }) => {
             </div>
 
             {/* Actions */}
-            <div className="mt-5 flex gap-3">
-              <button
-                onClick={() =>
-                  (window.location.href = `/edit-video/${video._id}`)
-                }
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-2 font-semibold text-white transition hover:bg-orange-600"
-              >
-                <Pencil size={16} />
-                Edit
-              </button>
+           <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:gap-3">
+  <button
+    onClick={() => navigate(`/edit-video/${video._id}`)}
+    className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-2 font-semibold text-white transition hover:bg-orange-600"
+  >
+    <Pencil size={16} />
+    Edit
+  </button>
 
-              <button
-                onClick={() => onDelete(video._id)}
-                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-500 px-4 py-2 font-semibold text-white transition hover:bg-red-600"
-              >
-                <Trash2 size={16} />
-                Delete
-              </button>
-            </div>
+  <button
+    onClick={() => onDelete(video._id)}
+    className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-red-500 px-4 py-2 font-semibold text-white transition hover:bg-red-600"
+  >
+    <Trash2 size={16} />
+    Delete
+  </button>
+</div>
           </div>
         </div>
       ))}

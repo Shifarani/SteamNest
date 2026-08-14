@@ -16,6 +16,7 @@ import {
 
   const WatchPage = () => {
   const { videoId } = useParams();
+  const { currentUser } = useAuth();
  
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -38,6 +39,8 @@ const [showShareModal, setShowShareModal] = useState(false);
   useEffect(() => {
   const fetchVideo = async () => {
     try {
+      setLoading(true);
+
       const data = await getVideoById(videoId);
 
       console.log("Video Data:", data);
@@ -47,9 +50,12 @@ const [showShareModal, setShowShareModal] = useState(false);
       setLikesCount(data.likesCount || 0);
       setIsLiked(data.isLiked || false);
 
-      console.log("Adding history:", videoId);
+      // Add to watch history only for logged-in user
+      if (currentUser?._id) {
+        console.log("Adding history:", videoId);
 
-      await addToWatchHistory(videoId);
+        await addToWatchHistory(videoId);
+      }
 
     } catch (error) {
       console.error("Error fetching video:", error);
@@ -61,17 +67,16 @@ const [showShareModal, setShowShareModal] = useState(false);
   if (videoId) {
     fetchVideo();
   }
-}, [videoId]);
+}, [videoId, currentUser?._id]);
 
 
 
 useEffect(() => {
   if (video) {
-    setIsSubscribed(video.isSubscribed);
-    setSubscriberCount(video.subscribersCount);
+    setIsSubscribed(video.isSubscribed || false);
+    setSubscriberCount(video.subscribersCount || 0);
   }
 }, [video]);
-
 
 
 useEffect(() => {
@@ -82,14 +87,13 @@ useEffect(() => {
       console.log(data);
       console.log(Object.keys(data));
 
-      const videos = data.docs;
+      const videos = data?.docs || [];
 
-      const filteredVideos = videos.filter(
-        (item) => item._id !== videoId
-      );
+const filteredVideos = videos.filter(
+  (item) => item._id !== videoId
+);
 
-      setRelatedVideos(filteredVideos);
-
+setRelatedVideos(filteredVideos);
     } catch (error) {
       console.error("Error fetching related videos:", error);
     }
@@ -108,7 +112,7 @@ useEffect(() => {
 
       console.log("Comments API Response:", data);
 
-      setComments(data.comments);
+      setComments(data?.comments || []);
 
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -181,51 +185,58 @@ const handleLike = async () => {
 
 // SUBSCRIBE
 const handleSubscribe = async () => {
+  if (!currentUser?._id) {
+    alert("Please login to subscribe");
+    return;
+  }
+
+  if (!video?.owner?._id) return;
+
+  const previousState = isSubscribed;
+
   try {
-
     setSubscribeLoading(true);
-
-    const previousState = isSubscribed;
 
     setIsSubscribed(!previousState);
 
     setSubscriberCount((prev) =>
-      previousState ? prev - 1 : prev + 1
+      previousState ? Math.max(prev - 1, 0) : prev + 1
     );
 
     await toggleSubscription(video.owner._id);
 
+  } catch (error) {
+    console.error("Subscription Error:", error);
 
-  } catch(error) {
+    // Rollback
+    setIsSubscribed(previousState);
 
-    console.error(error);
-
-    setIsSubscribed(isSubscribed);
+    setSubscriberCount((prev) =>
+      previousState ? prev + 1 : Math.max(prev - 1, 0)
+    );
 
   } finally {
-
     setSubscribeLoading(false);
-
   }
 };
 
 useEffect(() => {
   const fetchPlaylists = async () => {
     try {
-      if (!currentUser) return;
+      if (!currentUser?._id) return;
 
       const data = await getUserPlaylists(currentUser._id);
 
-      setPlaylists(data);
+      setPlaylists(data || []);
 
     } catch (error) {
-      console.error(error);
+      console.error("Playlist Error:", error);
     }
   };
 
   fetchPlaylists();
 
-}, [currentUser]);
+}, [currentUser?._id]);
 
 
 
@@ -251,7 +262,15 @@ if (!video) {
 
 const handleCreatePlaylist = async () => {
   try {
-    if (!playlistName.trim() || !playlistDescription.trim()) return;
+    if (!currentUser?._id) {
+      alert("Please login first");
+      return;
+    }
+
+    if (!playlistName.trim() || !playlistDescription.trim()) {
+      alert("Please enter playlist name and description");
+      return;
+    }
 
     await createPlaylist({
       name: playlistName,
@@ -260,14 +279,21 @@ const handleCreatePlaylist = async () => {
 
     const data = await getUserPlaylists(currentUser._id);
 
-    setPlaylists(data);
+    setPlaylists(data || []);
+
     setPlaylistName("");
     setPlaylistDescription("");
 
   } catch (error) {
-    console.error(error);
+    console.error("Create Playlist Error:", error);
+
+    alert(
+      error?.response?.data?.message ||
+      "Failed to create playlist"
+    );
   }
 };
+
 
 const handleAddToPlaylist = async (playlistId) => {
   console.log("Playlist Clicked:", playlistId);
@@ -286,11 +312,11 @@ const handleAddToPlaylist = async (playlistId) => {
 
 console.log("showShareModal:", showShareModal);
 return (
-  <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-purple-50 py-8 px-4">
+  <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-purple-50 px-3 py-4 sm:px-4 sm:py-6 lg:px-6 lg:py-8">
 
-    <div className="max-w-7xl mx-auto">
+    <div className="mx-auto w-full max-w-7xl">
 
-      <div className="grid grid-cols-1 xl:grid-cols-[1fr_380px] gap-8">
+        <div className="grid grid-cols-1 gap-5 lg:gap-8 xl:grid-cols-[minmax(0,1fr)_380px]">
 
         {/* ================= LEFT ================= */}
 
@@ -298,7 +324,7 @@ return (
 
           {/* Video Player */}
 
-          <div className="overflow-hidden rounded-3xl bg-black shadow-2xl">
+          <div className="w-full overflow-hidden rounded-2xl bg-black shadow-2xl sm:rounded-3xl">
 
             <div className="aspect-video">
 
@@ -324,9 +350,9 @@ return (
 
           {/* ================= VIDEO DETAILS ================= */}
 
-          <div className="mt-6 rounded-3xl bg-[var(--bg)] p-7 shadow-lg border border-gray-100">
+            <div className="mt-4 rounded-2xl border border-gray-100 bg-[var(--bg)] p-4 shadow-lg sm:mt-6 sm:rounded-3xl sm:p-5 lg:p-7">
 
-            <h1 className="text-3xl font-bold text-[var(--text)] leading-tight">
+            <h1 className="text-2xl font-bold leading-tight text-[var(--text)] sm:text-3xl">
 
               {video?.title}
 
@@ -352,7 +378,7 @@ return (
 
             {/* Channel Card */}
 
-            <div className="mt-8 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between rounded-2xl border border-gray-100 bg-gradient-to-r from-white to-orange-50 p-5">
+            <div className="mt-6 flex flex-col gap-5 rounded-2xl border border-gray-100 bg-gradient-to-r from-white to-orange-50 p-4 sm:mt-8 sm:p-5 lg:flex-row lg:items-center lg:justify-between">
 
               <div className="flex items-center gap-4">
 
@@ -391,6 +417,8 @@ return (
   className={`
     h-12
     rounded-full
+    w-full 
+    lg:w-auto
     px-8
     text-white
     font-semibold
@@ -416,7 +444,7 @@ return (
             </div>
                         {/* Description */}
 
-            <div className="mt-8 rounded-2xl bg-gray-50 border border-gray-100 p-6">
+            <div className="mt-6 rounded-2xl border border-gray-100 bg-gray-50 p-4 sm:mt-8 sm:p-6">
 
               <h3 className="text-lg font-bold text-gray-800 mb-3">
                 Description
@@ -434,8 +462,7 @@ return (
 
             {/* Action Buttons */}
 
-            <div className="mt-8 flex flex-wrap gap-4">
-
+           <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
               <button
                   onClick={handleLike}
                   disabled={likeLoading}
@@ -483,6 +510,8 @@ return (
                 hover:-translate-y-1
                 hover:bg-violet-700
                 hover:shadow-xl
+                w-full 
+                sm:w-auto
                 "
               >
                 📂 Save
@@ -503,6 +532,8 @@ return (
                   py-3
                   text-white
                   font-semibold
+                  w-full 
+                  sm:w-auto
                 "
               >
                 🔗 Share
@@ -514,7 +545,7 @@ return (
 
             {/* ================= COMMENTS ================= */}
 
-            <div className="mt-10 rounded-3xl border border-gray-100 bg-[var(--bg)] p-7 shadow-lg">
+            <div className="mt-8 rounded-2xl border border-gray-100 bg-[var(--bg)] p-4 shadow-lg sm:mt-10 sm:rounded-3xl sm:p-7">
 
               <div className="flex items-center justify-between">
 
@@ -532,7 +563,7 @@ return (
 
               </div>
 
-                {!isReadonly && (
+                {currentUser && (
                   <>
 
               <textarea
@@ -546,7 +577,8 @@ return (
                 rounded-2xl
                 border
                 border-gray-300
-                p-5
+                p-4
+                sm:p-5
                 outline-none
                 resize-none
                 transition
@@ -603,7 +635,8 @@ return (
                       key={comment._id}
                       className="
                       flex
-                      gap-4
+                      gap-3
+                      sm:gap-4
                       rounded-2xl
                       border
                       border-gray-100
@@ -655,8 +688,7 @@ return (
 
           <div>
 
-            <div className="sticky top-24 rounded-3xl border border-gray-100 bg-[var(--bg)] p-6 shadow-lg">
-
+           <div className="rounded-2xl border border-gray-100 bg-[var(--bg)] p-4 shadow-lg sm:rounded-3xl sm:p-6 xl:sticky xl:top-24">
               <h2 className="mb-6 text-2xl font-bold text-[var(--text)]">
 
                 Related Videos
@@ -672,7 +704,9 @@ return (
                     to={`/watch/${item._id}`}
                     className="
                     flex
-                    gap-4
+                    gap-3
+                    rounded-2xl
+                    sm:gap-4
                     rounded-2xl
                     p-3
                     transition-all
@@ -684,7 +718,7 @@ return (
                     <img
                       src={item.thumbnail}
                       alt={item.title}
-                      className="h-24 w-40 rounded-xl object-cover"
+                     className="h-20 w-28 shrink-0 rounded-xl object-cover sm:h-24 sm:w-40"
                     />
 
                     <div className="flex flex-col justify-between">
@@ -727,8 +761,8 @@ return (
 
       </div>
       {showPlaylistModal && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-    <div className="w-full max-w-md rounded-3xl bg-[var(--bg)] p-6 shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/60 p-4">    
+    <div className="my-4 w-full max-w-md rounded-3xl bg-[var(--bg)] p-4 shadow-2xl sm:p-6">
 
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">📂 Save to Playlist</h2>
@@ -774,7 +808,7 @@ return (
         placeholder="Playlist Name"
         value={playlistName}
         onChange={(e) => setPlaylistName(e.target.value)}
-        className="mb-3 w-full rounded-xl border p-3"
+       className="mb-3 w-full rounded-xl border border-gray-300 bg-transparent p-3 outline-none focus:border-orange-500"
       />
 
       <textarea

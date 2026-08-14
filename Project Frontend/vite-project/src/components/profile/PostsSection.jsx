@@ -78,10 +78,10 @@ const PostsSection = ({ user, isOwnProfile }) => {
     <div className="space-y-6">
 
       {/* Create Post */}
+      {isOwnProfile && (
+        <div className="rounded-2xl border border-white/10 bg-[var(--bg)]/10 p-4 backdrop-blur-xl sm:p-6">
 
-      <div className="rounded-2xl bg-[var(--bg)]/10 p-6 backdrop-blur-xl border border-white/10">
-
-        <h2 className="text-2xl font-bold text-white">
+        <h2 className="text-xl font-bold text-white sm:text-2xl">
           Create Post
         </h2>
 
@@ -90,7 +90,7 @@ const PostsSection = ({ user, isOwnProfile }) => {
           onChange={(e) => setContent(e.target.value)}
           placeholder="What's on your mind?"
           rows={4}
-          className="mt-4 w-full rounded-xl bg-black/20 p-4 text-white outline-none"
+          className="mt-4 min-h-[120px] w-full resize-none rounded-xl border border-white/10 bg-black/20 p-4 text-white outline-none placeholder:text-gray-400 focus:border-orange-400 focus:ring-2 focus:ring-orange-500/20"
         />
 
         <button
@@ -102,6 +102,7 @@ const PostsSection = ({ user, isOwnProfile }) => {
         </button>
 
       </div>
+      )}
 
       {/* Loading */}
 
@@ -137,10 +138,10 @@ const PostsSection = ({ user, isOwnProfile }) => {
 
             <div
               key={post._id}
-              className="rounded-2xl border border-white/10 bg-[var(--bg)]/10 p-6 backdrop-blur-xl"
+              className="rounded-2xl border border-white/10 bg-[var(--bg)]/10 p-4 backdrop-blur-xl sm:p-6"
             >
 
-              <div className="flex items-center justify-between">
+               <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 
                 <div>
 
@@ -154,7 +155,7 @@ const PostsSection = ({ user, isOwnProfile }) => {
 
                 </div>
 
-               <div className="flex items-center gap-3">
+             <div className="flex flex-wrap items-center gap-2 sm:gap-3">
               <span className="text-sm text-[var(--muted)]">
                 {new Date(post.createdAt).toLocaleDateString()}
               </span>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MessageCircle, CalendarDays } from "lucide-react";
 import { getMyVideoComments } from "../../api/commentApi";
+import { getSecureImageUrl } from "../../utils/imageUrl";
 
 const CommentsSection = () => {
   const [comments, setComments] = useState([]);
@@ -76,15 +77,15 @@ const CommentsSection = () => {
 
           {/* Comment Header */}
 
-          <div className="flex items-center justify-between border-b border-white/10 px-6 py-5">
+           <div className="flex flex-col gap-4 border-b border-white/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-5">
 
             <div className="flex items-center gap-4">
 
               <img
-                src={
-                  comment.owner?.avatar ||
-                  "https://ui-avatars.com/api/?name=User"
-                }
+               src={
+                getSecureImageUrl(comment.owner?.avatar) ||
+                "https://ui-avatars.com/api/?name=User"
+              }
                 alt={comment.owner?.username || "User"}
                 className="
                   h-12
@@ -112,7 +113,7 @@ const CommentsSection = () => {
 
             </div>
 
-            <div className="flex items-center gap-2 text-sm text-[var(--muted)]">
+            <div className="flex items-center gap-2 text-xs text-[var(--muted)] sm:text-sm">
 
               <CalendarDays size={16} />
 
@@ -125,7 +126,7 @@ const CommentsSection = () => {
 
           {/* Comment */}
 
-          <div className="px-6 py-5">
+           <div className="px-4 py-4 sm:px-6 sm:py-5">
 
             <div className="flex gap-3">
 
@@ -150,27 +151,33 @@ const CommentsSection = () => {
               to={`/watch/${comment.video._id}`}
               className="
                 flex
+                flex-col
                 gap-4
                 border-t
                 border-white/10
                 bg-black/10
-                p-5
+                p-4
                 transition
                 hover:bg-white/5
+                sm:flex-row
+                sm:p-5
               "
             >
 
               <img
                 src={
-                  comment.video.thumbnail ||
+                  getSecureImageUrl(comment.video.thumbnail) ||
                   "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=500"
                 }
                 alt={comment.video.title}
                 className="
-                  h-24
-                  w-40
+                  h-44
+                  w-full
                   rounded-xl
                   object-cover
+                  sm:h-24
+                  sm:w-40
+                  sm:shrink-0
                 "
               />
 
