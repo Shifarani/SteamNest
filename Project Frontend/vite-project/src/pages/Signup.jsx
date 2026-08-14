@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
 import {
@@ -12,6 +13,7 @@ import {
 
 const Signup = () => {
   const navigate = useNavigate();
+  const { fetchCurrentUser } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -58,6 +60,9 @@ const handleSubmit = async (e) => {
     );
 
     console.log(response.data);
+
+    await fetchCurrentUser();
+
 
     alert("Account Created Successfully 🎉");
 

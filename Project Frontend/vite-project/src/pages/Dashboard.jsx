@@ -9,6 +9,7 @@ import {
   CartesianGrid,
   Tooltip,
 } from "recharts";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
 
@@ -112,23 +113,28 @@ return (
 
         </div>
 
-        <button
-          className="
+       <Link
+        to="/upload"
+        className="
+          flex
           h-14
+          items-center
+          justify-center
           px-8
           rounded-2xl
           bg-gradient-to-r
           from-orange-500
           to-purple-600
           font-semibold
+          text-white
           shadow-xl
           hover:scale-105
           hover:shadow-orange-500/40
           duration-300
-          "
-        >
-          + Upload Video
-        </button>
+        "
+      >
+        + Upload Video
+      </Link>
 
       </div>
 

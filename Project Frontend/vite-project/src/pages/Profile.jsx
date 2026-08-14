@@ -48,6 +48,11 @@ import { useAuth } from "../context/AuthContext";
 function Profile() {
   const { currentUser } = useAuth();
   const { username } = useParams();
+   const [user, setUser] = useState(null);
+     const isOwnProfile =
+    currentUser?._id === user?._id;
+
+
 const [hasStory, setHasStory] = useState(false);
 const [story, setStory] = useState(null);
 const [storyOpen, setStoryOpen] = useState(false);
@@ -57,7 +62,7 @@ const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
 const [allStories, setAllStories] = useState([]);
 const [activeStoryUser, setActiveStoryUser] = useState(null);
 const [activeUserStories, setActiveUserStories] = useState([]);
-  const [user, setUser] = useState(null);
+ 
 
   const [loading, setLoading] = useState(true);
 
@@ -497,6 +502,7 @@ const filteredVideos = videos.filter((video) =>
                 />
 
                 {/* ✨ CHANGE COVER BUTTON */}
+                {isOwnProfile && (
                 <label
                   htmlFor="coverInput"
                   className="
@@ -544,6 +550,8 @@ const filteredVideos = videos.filter((video) =>
                 >
                   📷 Change Cover
                 </label>
+
+)}
 
               </div>
 
