@@ -26,10 +26,10 @@ const Navbar = () => {
   
     <header className="sticky top-0 z-50 w-full max-w-full overflow-x-hidden border-b border-slate-700 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 backdrop-blur-md">
 
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-3 sm:px-5">
+     <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-2 px-2 sm:px-5">
 
         {/* Left */}
-        <div className="flex items-center gap-4">
+       <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-4">
           <button
             onClick={() => setSidebarOpen(true)}
             className="rounded-lg p-2 text-white transition hover:bg-[var(--bg)]/10"
@@ -72,7 +72,7 @@ const Navbar = () => {
 
           <Link
             to="/upload"
-            className="flex items-center gap-2 rounded-full bg-orange-500 px-4 py-2 text-white transition hover:bg-orange-600"
+           className="flex shrink-0 items-center gap-1 rounded-full bg-orange-500 px-2.5 py-2 text-white transition hover:bg-orange-600 sm:gap-2 sm:px-4"
           >
             <FiUpload />
             <span className="hidden md:block">Upload</span>
