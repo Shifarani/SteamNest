@@ -61,7 +61,7 @@ const handleSubmit = async (e) => {
 
     alert("Account Created Successfully 🎉");
 
-    navigate("/login");
+    navigate("/dashboard");
 
   } catch (error) {
     console.log(error);
@@ -231,38 +231,59 @@ const handleSubmit = async (e) => {
 
             <div className="grid gap-5 md:grid-cols-2">
 
-              <label className="cursor-pointer rounded-xl border-2 border-dashed border-orange-300 bg-orange-50 p-6 text-center transition hover:bg-orange-100">
+             <label className="cursor-pointer rounded-xl border-2 border-dashed border-orange-300 bg-orange-50 p-6 text-center transition hover:bg-orange-100">
 
-                <FaCamera className="mx-auto text-3xl text-orange-500" />
+                  {avatar ? (
+                    <img
+                      src={URL.createObjectURL(avatar)}
+                      alt="Avatar Preview"
+                      className="mx-auto h-24 w-24 rounded-full object-cover"
+                    />
+                  ) : (
+                    <>
+                      <FaCamera className="mx-auto text-3xl text-orange-500" />
 
-                <p className="mt-3 font-medium">
-                  Upload Avatar
-                </p>
-                   <input
-                        type="file"
-                       accept="image/*"
-                       className="hidden"
-                       onChange={(e) => setAvatar(e.target.files[0])}
+                      <p className="mt-3 font-medium">
+                        Upload Avatar
+                      </p>
+                    </>
+                  )}
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => setAvatar(e.target.files[0])}
+                  />
+
+                </label>
+
+             <label className="cursor-pointer rounded-xl border-2 border-dashed border-purple-300 bg-purple-50 p-6 text-center transition hover:bg-purple-100">
+
+              {coverImage ? (
+                <img
+                  src={URL.createObjectURL(coverImage)}
+                  alt="Cover Preview"
+                  className="mx-auto h-24 w-full rounded-xl object-cover"
                 />
-               
-              </label>
+              ) : (
+                <>
+                  <FaCamera className="mx-auto text-3xl text-purple-500" />
 
-              <label className="cursor-pointer rounded-xl border-2 border-dashed border-purple-300 bg-purple-50 p-6 text-center transition hover:bg-purple-100">
+                  <p className="mt-3 font-medium">
+                    Cover Image
+                  </p>
+                </>
+              )}
 
-                <FaCamera className="mx-auto text-3xl text-purple-500" />
-
-                <p className="mt-3 font-medium">
-                  Cover Image
-                </p>
-                <input
-                   type="file"
-                  accept="image/*"
-                 className="hidden"
-                  onChange={(e) => setCoverImage(e.target.files[0])}
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => setCoverImage(e.target.files[0])}
               />
-               
 
-              </label>
+            </label>
 
             </div>
 

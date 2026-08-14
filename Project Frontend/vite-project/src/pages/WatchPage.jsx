@@ -150,34 +150,25 @@ const handleAddComment = async () => {
 
 
 
-// LIKE
 const handleLike = async () => {
   try {
-
     setLikeLoading(true);
 
-    await toggleVideoLike(videoId);
+    const response = await toggleVideoLike(videoId);
 
-    if (isLiked) {
+    console.log("Like API Response:", response);
 
-      setIsLiked(false);
-      setLikesCount((prev) => prev - 1);
+    const data = response?.data;
 
-    } else {
-
-      setIsLiked(true);
-      setLikesCount((prev) => prev + 1);
-
+    if (data) {
+      setIsLiked(data.isLiked ?? false);
+      setLikesCount(data.likesCount ?? 0);
     }
 
   } catch (error) {
-
-    console.error(error);
-
+    console.error("Like Error:", error);
   } finally {
-
     setLikeLoading(false);
-
   }
 };
 
