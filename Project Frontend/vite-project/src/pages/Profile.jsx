@@ -49,10 +49,7 @@ function Profile() {
   const { currentUser } = useAuth();
   const { username } = useParams();
    const [user, setUser] = useState(null);
-     const isOwnProfile =
-    currentUser?._id === user?._id;
-
-
+    
 const [hasStory, setHasStory] = useState(false);
 const [story, setStory] = useState(null);
 const [storyOpen, setStoryOpen] = useState(false);
