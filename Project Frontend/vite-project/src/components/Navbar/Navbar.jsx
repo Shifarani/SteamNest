@@ -24,9 +24,9 @@ const Navbar = () => {
   />
 
   
-    <header className="sticky top-0 z-50 w-full border-b border-slate-700 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full max-w-full overflow-x-hidden border-b border-slate-700 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 backdrop-blur-md">
 
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
+      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-3 sm:px-5">
 
         {/* Left */}
         <div className="flex items-center gap-4">
@@ -85,21 +85,21 @@ const Navbar = () => {
           {loading ? null : isLoggedIn ? (
             <ProfileMenu user={user} />
           ) : (
-            <div className="flex items-center gap-3">
-              <Link
-                to="/login"
-                className="font-medium text-white hover:text-orange-500"
-              >
-                Login
-              </Link>
+           <div className="flex items-center gap-1 sm:gap-3">
+            <Link
+              to="/login"
+              className="whitespace-nowrap px-1 text-sm font-medium text-white hover:text-orange-500 sm:px-0 sm:text-base"
+            >
+              Login
+            </Link>
 
-              <Link
-                to="/signup"
-                className="rounded-full bg-gradient-to-r from-orange-500 to-purple-600 px-4 py-2 text-white"
-              >
-                Signup
-              </Link>
-            </div>
+            <Link
+              to="/signup"
+              className="whitespace-nowrap rounded-full bg-gradient-to-r from-orange-500 to-purple-600 px-2.5 py-1.5 text-sm text-white sm:px-4 sm:py-2 sm:text-base"
+            >
+              Signup
+            </Link>
+          </div>
           )}
 
         </div>
