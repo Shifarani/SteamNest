@@ -97,7 +97,7 @@ const Navbar = () => {
 
                 <Link
                   to="/signup"
-                  className="shrink-0 whitespace-nowrap rounded-full bg-gradient-to-r from-orange-500 to-purple-600 px-2.5 py-1.5 text-sm text-white sm:px-4 sm:py-2 sm:text-base"
+                  className="shrink-0 whitespace-nowrap rounded-full bg-gradient-to-r from-orange-500 to-purple-600 px-2 py-1.5 text-xs text-white sm:px-4 sm:py-2 sm:text-base"
                 >
                   Signup
                 </Link>
