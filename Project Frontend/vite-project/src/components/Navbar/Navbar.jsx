@@ -85,21 +85,21 @@ const Navbar = () => {
           {loading ? null : isLoggedIn ? (
             <ProfileMenu user={user} />
           ) : (
-           <div className="flex items-center gap-1 sm:gap-3">
-            <Link
-              to="/login"
-              className="whitespace-nowrap px-1 text-sm font-medium text-white hover:text-orange-500 sm:px-0 sm:text-base"
-            >
-              Login
-            </Link>
+          <div className="flex shrink-0 items-center gap-1 sm:gap-3">
+          <Link
+            to="/login"
+            className="whitespace-nowrap px-1 text-sm font-medium text-white hover:text-orange-500 sm:px-0 sm:text-base"
+          >
+            Login
+          </Link>
 
-            <Link
-              to="/signup"
-              className="whitespace-nowrap rounded-full bg-gradient-to-r from-orange-500 to-purple-600 px-2.5 py-1.5 text-sm text-white sm:px-4 sm:py-2 sm:text-base"
-            >
-              Signup
-            </Link>
-          </div>
+          <Link
+            to="/signup"
+            className="shrink-0 whitespace-nowrap rounded-full bg-gradient-to-r from-orange-500 to-purple-600 px-3 py-1.5 text-sm text-white sm:px-4 sm:py-2 sm:text-base"
+          >
+            Signup
+          </Link>
+        </div>
           )}
 
         </div>
