@@ -26,10 +26,10 @@ const Navbar = () => {
   
     <header className="sticky top-0 z-50 w-full max-w-full overflow-x-hidden border-b border-slate-700 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 backdrop-blur-md">
 
-     <div className="mx-auto flex h-16 w-full max-w-7xl items-center gap-2 px-2 sm:px-5">
+     <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
 
         {/* Left */}
-       <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-4">
+          <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-4">
           <button
             onClick={() => setSidebarOpen(true)}
             className="rounded-lg p-2 text-white transition hover:bg-[var(--bg)]/10"
@@ -72,7 +72,7 @@ const Navbar = () => {
 
           <Link
             to="/upload"
-           className="flex shrink-0 items-center gap-1 rounded-full bg-orange-500 px-2.5 py-2 text-white transition hover:bg-orange-600 sm:gap-2 sm:px-4"
+          className="flex items-center gap-2 rounded-full bg-orange-500 px-4 py-2 text-white transition hover:bg-orange-600"
           >
             <FiUpload />
             <span className="hidden md:block">Upload</span>
@@ -85,17 +85,17 @@ const Navbar = () => {
           {loading ? null : isLoggedIn ? (
             <ProfileMenu user={user} />
           ) : (
-          <div className="flex shrink-0 items-center gap-1 sm:gap-3">
+         <div className="flex shrink-0 items-center gap-1">
           <Link
             to="/login"
-            className="whitespace-nowrap px-1 text-sm font-medium text-white hover:text-orange-500 sm:px-0 sm:text-base"
+            className="whitespace-nowrap px-1 text-sm font-medium text-white hover:text-orange-500"
           >
             Login
           </Link>
 
           <Link
             to="/signup"
-            className="shrink-0 whitespace-nowrap rounded-full bg-gradient-to-r from-orange-500 to-purple-600 px-3 py-1.5 text-sm text-white sm:px-4 sm:py-2 sm:text-base"
+            className="shrink-0 whitespace-nowrap rounded-full bg-gradient-to-r from-orange-500 to-purple-600 px-2.5 py-1.5 text-sm text-white"
           >
             Signup
           </Link>
