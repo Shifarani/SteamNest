@@ -291,7 +291,7 @@ const changeCurrentPassword = asyncHandler(async(req,res)=>{
     const user= await User.findById(req.user?._id)
     const isPassword=await user.isPasswordCorrect(oldPassword)
 
-    if(!isPasswordCorrect){
+    if(!isPassword){
         throw new ApiError(400,"Invalid old password")
     }
     user.password = newPassword
@@ -559,6 +559,78 @@ const addToWatchHistory = asyncHandler(async(req,res)=>{
 });
 
 const getwatchHistory = asyncHandler(async(req,res)=>{
+    const user= await User.aggregate([
+        {
+            $match:{
+                _id: new mongoose.Types.ObjectId(req.user._id)
+            }
+        },
+        {
+            $lookup:{
+                from:"videos",
+                localField:"watchHistory",
+                foreignField:"_id",
+                as:"watchHistory",
+                pipeline:[
+                    {
+                        $lookup: {
+                            from:"user",
+                            localField:"owner",
+                            foreignField:"_id",
+                            as:"owner",
+                            pipeline:[
+                                {
+                                    $project:{
+                                        fullName:1,
+                                        username:1,
+                                        avatar:1,
+                                    }
+                                }
+                            ]
+                        },
+                        
+
+                    },
+                    {
+                        $addFields:{
+                            owner:{
+                                $first:"$owners"
+                            }
+                        }
+                    } 
+                    
+                ]
+
+            }
+        }
+    ])
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            user[0].watchHistory,
+            "watch history fetched successfully"
+
+        )
+    )
+})
+
+export {
+    registerUser,
+    loginUser,
+    logoutUser,
+    refreshAccessToken,
+    changeCurrentPassword,
+    updateAccountDetails,
+    getCurrentUser,
+    updateUserAvatar,
+    updateUserCoverImage,
+    getUserChannelProfile,
+    getwatchHistory,
+    addToWatchHistory,
+    searchUsers
+};const getwatchHistory = asyncHandler(async(req,res)=>{
     const user= await User.aggregate([
         {
             $match:{

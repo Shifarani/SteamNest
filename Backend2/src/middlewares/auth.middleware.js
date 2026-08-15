@@ -10,7 +10,9 @@ console.log("Cookies:", req.cookies);
 console.log("Access Token:", req.cookies?.accessToken);
 console.log("Authorization:", req.header("Authorization"));
    try {
-     const token=req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ","")
+     const token =
+    req.cookies?.accessToken ||
+    req.header("Authorization")?.replace("Bearer ", "");
  
      if(!token){
          throw new ApiError(401,"Unauthorized request")
