@@ -2,7 +2,7 @@ import axiosInstance from "./axiosInstance";
 
 export const getCurrentUser = async () => {
   const response = await axiosInstance.get("/users/current-user");
-  return response.data;
+  return response.data.data;
 };
 
 export const logoutUser = async () => {
