@@ -961,7 +961,7 @@ const filteredVideos = videos.filter((video) =>
                         >
 
                           <img
-                            src={video.thumbnail}
+                            src={getSecureImageUrl(video.thumbnail)}
                             alt={video.title}
                             className="h-56 w-full object-cover sm:h-56"
                           />
