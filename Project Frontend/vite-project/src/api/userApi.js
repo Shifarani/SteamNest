@@ -1,12 +1,12 @@
 import axiosInstance from "./axiosInstance";
 
 export const getCurrentUser = async () => {
-  const response = await axiosInstance.get("/current-user");
+  const response = await axiosInstance.get("/users/current-user");
   return response.data;
 };
 
 export const logoutUser = async () => {
-  const response = await axiosInstance.post("/logout");
+   const response = await axiosInstance.post("/users/logout");
   return response.data;
 };
 export const updateAvatar = async(formData)=>{
