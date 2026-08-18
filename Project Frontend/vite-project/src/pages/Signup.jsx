@@ -54,19 +54,18 @@ const handleSubmit = async (e) => {
       data.append("coverImage", coverImage);
     }
 
-    const response = await axiosInstance.post(
-      "/users/register",
-      data
-    );
+   const response = await axiosInstance.post(
+  "/users/register",
+  data
+);
 
-    console.log(response.data);
+console.log("REGISTER RESPONSE:", response.data);
 
-    await fetchCurrentUser();
+await fetchCurrentUser();
 
+alert("Account Created Successfully 🎉");
 
-    alert("Account Created Successfully 🎉");
-
-    navigate("/dashboard");
+navigate("/dashboard");
 
   } catch (error) {
     console.log(error);

@@ -1,10 +1,4 @@
-import axios from "axios";
 import axiosInstance from "./axiosInstance";
-
-const API = axios.create({
-  baseURL: "https://steamnest.onrender.com/api/v1/users",
-  withCredentials: true,
-});
 
 export const getCurrentUser = async () => {
   const response = await API.get("/current-user");
