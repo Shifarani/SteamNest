@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 //import { formatDistanceToNow } from "date-fns";
+import { getSecureImageUrl } from "../../utils/imageUrl";
 
 const VideoCard = ({ video }) => {
   return (
@@ -10,7 +11,7 @@ const VideoCard = ({ video }) => {
       {/* Thumbnail */}
       <div className="relative aspect-video overflow-hidden bg-gray-200">
         <img
-          src={video.thumbnail}
+        src={getSecureImageUrl(video.thumbnail)}
           alt={video.title}
           className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
         />
@@ -25,7 +26,7 @@ const VideoCard = ({ video }) => {
       <div className="flex gap-3 p-4">
         {/* Avatar */}
         <img
-          src={video.owner.avatar}
+          src={getSecureImageUrl(video.owner.avatar)}
           alt={video.owner.fullName}
           className="h-10 w-10 rounded-full object-cover"
         />
