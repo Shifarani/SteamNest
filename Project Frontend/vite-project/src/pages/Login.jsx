@@ -74,26 +74,33 @@ if (!emailRegex.test(formData.email)) {
 
     toast.success("Login Successful");
 
+const accessToken = response.data.data.accessToken;
+
 if (rememberMe) {
+  localStorage.setItem("accessToken", accessToken);
 
   localStorage.setItem(
     "user",
     JSON.stringify(response.data.data.user)
   );
 
+  sessionStorage.removeItem("accessToken");
+  sessionStorage.removeItem("user");
 } else {
+  sessionStorage.setItem("accessToken", accessToken);
 
   sessionStorage.setItem(
     "user",
     JSON.stringify(response.data.data.user)
   );
 
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("user");
 }
 
 await fetchCurrentUser();
 
 navigate("/home");
-
   } catch (error) {
 
    toast.error(

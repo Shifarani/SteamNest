@@ -24,14 +24,21 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = async () => {
-    try {
-      await logoutUser();
-      setCurrentUser(null);
-    } catch (error) {
-      console.error("Logout Error:", error);
-    }
-  };
+ const logout = async () => {
+  try {
+    await logoutUser();
+
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
+
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("user");
+
+    setCurrentUser(null);
+  } catch (error) {
+    console.error("Logout Error:", error);
+  }
+};
 
   useEffect(() => {
     fetchCurrentUser();

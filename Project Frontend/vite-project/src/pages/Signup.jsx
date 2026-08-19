@@ -54,12 +54,22 @@ const handleSubmit = async (e) => {
       data.append("coverImage", coverImage);
     }
 
-   const response = await axiosInstance.post(
+  const response = await axiosInstance.post(
   "/users/register",
   data
 );
 
 console.log("REGISTER RESPONSE:", response.data);
+
+localStorage.setItem(
+  "accessToken",
+  response.data.data.accessToken
+);
+
+localStorage.setItem(
+  "user",
+  JSON.stringify(response.data.data.user)
+);
 
 await fetchCurrentUser();
 
